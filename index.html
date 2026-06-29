@@ -81,7 +81,13 @@ body.armed .resetbtn{display:flex}
 .stop-item.reached .chip{box-shadow:0 0 0 3px rgba(108,198,224,.18)}
 .foot{padding:16px 22px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.5}
 .foot button{background:none;border:none;color:var(--frost);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
-.map-wrap{flex:1 1 auto;position:relative;min-width:0}
+.map-wrap{flex:1 1 auto;position:relative;min-width:0;cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMTYgMi40YzQuNyA1LjEgNi45IDEwLjEgNi45IDE1LjRjMCA0LjMtMSA4LTIuNSAxMC43Yy0xLjQtLjYtMi45LS45LTQuNC0uOXMtMyAuMy00LjQgLjljLTEuNS0yLjctMi41LTYuNC0yLjUtMTAuN2MwLTUuMyAyLjItMTAuMyA2LjktMTUuNHoiIGZpbGw9IiNmNWZiZmYiIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSIxLjYiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iMTYiIHkxPSI4IiB4Mj0iMTYiIHkyPSIyNS41IiBzdHJva2U9IiMwODE1MWQiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=") 16 16,default}
+/* custom map cursors: top-down ship (default) / dog sled (family mode), applied to .map-wrap and the Leaflet drag layer so they show over the chart. Grab-while-dragging and marker pointer preserved; falls back to default/grab; disabled on touch. */
+.map-wrap .leaflet-grab{cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMTYgMi40YzQuNyA1LjEgNi45IDEwLjEgNi45IDE1LjRjMCA0LjMtMSA4LTIuNSAxMC43Yy0xLjQtLjYtMi45LS45LTQuNC0uOXMtMyAuMy00LjQgLjljLTEuNS0yLjctMi41LTYuNC0yLjUtMTAuN2MwLTUuMyAyLjItMTAuMyA2LjktMTUuNHoiIGZpbGw9IiNmNWZiZmYiIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSIxLjYiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iMTYiIHkxPSI4IiB4Mj0iMTYiIHkyPSIyNS41IiBzdHJva2U9IiMwODE1MWQiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=") 16 16,grab}
+body.familymode .map-wrap{cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxnIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSI0LjIiPjxwYXRoIGQ9Ik0zLjUgMjVxMC0zIDMuNS0zaDE1cTQuNSAwIDUuNS0zIi8+PHBhdGggZD0iTTcgMTloMTQuNSIvPjxwYXRoIGQ9Ik05IDIydi0zTTE1IDIydi0zTTIxIDIydi0zIi8+PHBhdGggZD0iTTIyIDE5di01cTAtMi4yIDIuMi0yLjJoMy4zIi8+PC9nPjxnIHN0cm9rZT0iI2Y1ZmJmZiIgc3Ryb2tlLXdpZHRoPSIyIj48cGF0aCBkPSJNMy41IDI1cTAtMyAzLjUtM2gxNXE0LjUgMCA1LjUtMyIvPjxwYXRoIGQ9Ik03IDE5aDE0LjUiLz48cGF0aCBkPSJNOSAyMnYtM00xNSAyMnYtM00yMSAyMnYtMyIvPjxwYXRoIGQ9Ik0yMiAxOXYtNXEwLTIuMiAyLjItMi4yaDMuMyIvPjwvZz48L3N2Zz4=") 16 16,default}
+body.familymode .map-wrap .leaflet-grab{cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxnIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSI0LjIiPjxwYXRoIGQ9Ik0zLjUgMjVxMC0zIDMuNS0zaDE1cTQuNSAwIDUuNS0zIi8+PHBhdGggZD0iTTcgMTloMTQuNSIvPjxwYXRoIGQ9Ik05IDIydi0zTTE1IDIydi0zTTIxIDIydi0zIi8+PHBhdGggZD0iTTIyIDE5di01cTAtMi4yIDIuMi0yLjJoMy4zIi8+PC9nPjxnIHN0cm9rZT0iI2Y1ZmJmZiIgc3Ryb2tlLXdpZHRoPSIyIj48cGF0aCBkPSJNMy41IDI1cTAtMyAzLjUtM2gxNXE0LjUgMCA1LjUtMyIvPjxwYXRoIGQ9Ik03IDE5aDE0LjUiLz48cGF0aCBkPSJNOSAyMnYtM00xNSAyMnYtM00yMSAyMnYtMyIvPjxwYXRoIGQ9Ik0yMiAxOXYtNXEwLTIuMiAyLjItMi4yaDMuMyIvPjwvZz48L3N2Zz4=") 16 16,grab}
+.leaflet-dragging .map-wrap .leaflet-grab{cursor:grabbing!important}
+@media (pointer:coarse){.map-wrap,body.familymode .map-wrap{cursor:default}.map-wrap .leaflet-grab,body.familymode .map-wrap .leaflet-grab{cursor:grab}}
 .map-wrap:fullscreen,.map-wrap:-webkit-full-screen{width:100%;height:100%;background:#0a1620}
 .map-wrap:fullscreen #map,.map-wrap:-webkit-full-screen #map{height:100%}
 #map{position:absolute;inset:0;background:#0a1620}
@@ -94,6 +100,12 @@ body.armed .resetbtn{display:flex}
 .stop-div:hover .stop-marker{transform:scale(1.12)}
 .stop-div.is-active .stop-marker{transform:scale(1.22);box-shadow:0 0 0 4px rgba(214,166,74,.45),0 3px 9px rgba(0,0,0,.5)}
 .stop-marker.pop{animation:markerpop .5s cubic-bezier(.2,.8,.3,1.5)}
+/* differentiated stop types — additive only: numbered chip, winter flake, hover/active scale and pop all preserved. Type class set by inferStopType(); falls back to default style if absent. */
+.stop-marker--winter{border-color:var(--frost);box-shadow:0 0 0 3px rgba(108,198,224,.4),0 0 9px 1px rgba(108,198,224,.55),0 2px 6px rgba(0,0,0,.45);transform:scale(1.08)}
+.stop-marker--endpoint{border-color:var(--brass);box-shadow:0 0 0 3px rgba(214,166,74,.42),0 2px 7px rgba(0,0,0,.5);transform:scale(1.12)}
+.stop-marker--endpoint::after{content:"\2605";position:absolute;top:-7px;right:-6px;font-size:11px;line-height:1;color:var(--brass);text-shadow:0 0 3px #06121a,0 0 2px #06121a;pointer-events:none}
+.stop-marker--anchorage::after{content:"\2693";position:absolute;left:-6px;bottom:-6px;font-size:11px;line-height:1;color:#d5ecf6;text-shadow:0 0 3px #06121a,0 0 2px #06121a;pointer-events:none}
+.stop-marker--settlement::after{content:"\2302";position:absolute;left:-5px;bottom:-7px;font-size:12px;line-height:1;color:#ecdcae;text-shadow:0 0 3px #06121a,0 0 2px #06121a;pointer-events:none}
 @keyframes markerpop{0%{transform:scale(0);opacity:0}55%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}
 .ship-div{background:none;border:none}
 .ship-inner{width:30px;height:30px;display:grid;place-items:center;transition:transform .12s linear;filter:drop-shadow(0 0 7px rgba(255,210,127,.75))}
@@ -119,6 +131,10 @@ body.armed .resetbtn{display:flex}
 .lc-desc{font-size:13px;line-height:1.55;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
 .lc-desc p{margin:0 0 7px}
 .lc-desc p:last-child{margin-bottom:0}
+.lc-media{display:none;margin-bottom:12px}
+.lc-media.has-media{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.lc-media-item{flex:0 0 auto;width:120px;height:80px;border-radius:8px;object-fit:cover;border:1px solid var(--line);cursor:pointer}
+.lc-media-item:hover{border-color:var(--frost)}
 .lc-muted{font-style:italic;color:var(--faint)}
 .speedrow{display:flex;align-items:center;gap:10px;margin-top:14px}
 .speedlabel{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
@@ -402,6 +418,7 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
       <div class="lc-eb"><span class="lc-dot" id="lc-dot"></span><span id="lc-eb-text"></span></div>
       <h3 class="lc-place" id="lc-place"></h3>
       <div class="lc-meta"><span id="lc-date"></span><span class="lc-coord" id="lc-coord"></span></div>
+      <div class="lc-media" id="lc-media"></div>
       <div class="lc-desc" id="lc-desc"></div>
     </div>
     <div class="editpanel" id="editpanel">
@@ -443,7 +460,7 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
       <div class="fl-row"><span class="fl-key fl-kship"></span>By ship &mdash; the St.&nbsp;Roch (1944)</div>
       <div class="fl-row"><span class="fl-key fl-k1945"></span>St.&nbsp;Roch, carried west (1945)</div>
       <div class="fl-row"><span class="fl-key fl-ksled"></span>By dog sled (1946)</div>
-      <div class="fl-row"><span class="fl-key fl-knas"></span>By a different ship &mdash; the Nascopie</div>
+      <div class="fl-row"><span class="fl-key fl-knas"></span>By the Ship Nascopie</div>
       <div class="fl-row"><span class="fl-key fl-kest"></span>Estimated location</div>
       <div class="fl-hint">Press &#9654; to follow their two&#8209;year journey home, 1944&#8211;1946. The faint grey line is the St.&nbsp;Roch sailing on without them.</div>
     </div>
@@ -515,6 +532,19 @@ root.setProperty('--frost', C.frost); root.setProperty('--brass', C.brass);
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function el(tag, cls, txt){ const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
 function colorForStop(s){ return s.year==='winter' ? C.winter : C.years[s.year]; }
+// Infer a display type for a stop from existing data (winterLabel / desc / position).
+// Returns 'winter'|'endpoint'|'anchorage'|'settlement' or null (=> default style). Never throws.
+function inferStopType(s){
+  try{
+    if(s.winterLabel!=null) return 'winter';
+    var voy=V.voyages[s._vi], n=voy?voy.stops.length:0;            // endpoint = first/last stop of its voyage (Vancouver / Halifax termini)
+    if(s.n===1 || (n && s.n===n)) return 'endpoint';
+    var d=(s.desc||[]).join(' ').toLowerCase();
+    if(/anchor/.test(d)) return 'anchorage';                       // log mentions anchoring
+    if(/\b(post|town|village|detachment|dockyard|harbour)\b/.test(d)) return 'settlement';
+  }catch(_e){}
+  return null;
+}
 function fmtCoord(lat,lng){ const la=Math.abs(lat).toFixed(3)+'\u00b0'+(lat>=0?'N':'S'); const lo=Math.abs(lng).toFixed(3)+'\u00b0'+(lng>=0?'E':'W'); return la+'  '+lo; }
 function fmtDate(ms){ const d=new Date(ms); return d.getUTCDate()+' '+MONTHS[d.getUTCMonth()]+' '+d.getUTCFullYear(); }
 
@@ -584,7 +614,8 @@ V.voyages.forEach(function(voy,vi){
   voy.stops.forEach(function(s){
     s._vi=vi; const gi=STOPS.length; s._gi=gi; STOPS.push(s);
     const isW=s.year==='winter';
-    const html='<div class="stop-marker'+(isW?' winter':'')+'" style="background:'+colorForStop(s)+'">'+(isW?'<span class="flake">\u2744</span>':'')+'<span class="num">'+s.n+'</span></div>';
+    const stype=inferStopType(s); const tcls=stype?(' stop-marker--'+stype):'';
+    const html='<div class="stop-marker'+(isW?' winter':'')+tcls+'" style="background:'+colorForStop(s)+'">'+(isW?'<span class="flake">\u2744</span>':'')+'<span class="num">'+s.n+'</span></div>';
     const icon=L.divIcon({className:'stop-div',html:html,iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-15]});
     const m=L.marker([s.lat,s.lng],{icon:icon,title:s.n+'. '+s.place,riseOnHover:true}).addTo(map);
     m.bindPopup(function(){ return makePopup(s,voy); },{maxWidth:320,className:'voyage-popup'});
