@@ -55,6 +55,7 @@ body.armed .resetbtn{display:flex}
 .lg .ln{width:20px;height:0;border-top:3px solid var(--routeV1);border-radius:2px}
 .lg .ln.v2{border-top-color:var(--routeV2)}
 .lg .fl{font-size:12px;color:var(--frost)}
+.lg .sym{font-size:16px;line-height:1;width:16px;display:inline-flex;align-items:center;justify-content:center}
 .timeline{padding:4px 14px 30px}
 .voyage-head{padding:18px 8px 4px;margin-top:10px;border-top:1px solid var(--line)}
 .voyage-head.first{border-top:none;margin-top:2px}
@@ -81,7 +82,13 @@ body.armed .resetbtn{display:flex}
 .stop-item.reached .chip{box-shadow:0 0 0 3px rgba(108,198,224,.18)}
 .foot{padding:16px 22px 26px;border-top:1px solid var(--line);font-size:11px;color:var(--faint);line-height:1.5}
 .foot button{background:none;border:none;color:var(--frost);font:inherit;cursor:pointer;padding:0;text-decoration:underline}
-.map-wrap{flex:1 1 auto;position:relative;min-width:0}
+.map-wrap{flex:1 1 auto;position:relative;min-width:0;cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMTYgMi40YzQuNyA1LjEgNi45IDEwLjEgNi45IDE1LjRjMCA0LjMtMSA4LTIuNSAxMC43Yy0xLjQtLjYtMi45LS45LTQuNC0uOXMtMyAuMy00LjQgLjljLTEuNS0yLjctMi41LTYuNC0yLjUtMTAuN2MwLTUuMyAyLjItMTAuMyA2LjktMTUuNHoiIGZpbGw9IiNmNWZiZmYiIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSIxLjYiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iMTYiIHkxPSI4IiB4Mj0iMTYiIHkyPSIyNS41IiBzdHJva2U9IiMwODE1MWQiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=") 16 16,default}
+/* custom map cursors: top-down ship (default) / dog sled (family mode), applied to .map-wrap and the Leaflet drag layer so they show over the chart. Grab-while-dragging and marker pointer preserved; falls back to default/grab; disabled on touch. */
+.map-wrap .leaflet-grab{cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIj48cGF0aCBkPSJNMTYgMi40YzQuNyA1LjEgNi45IDEwLjEgNi45IDE1LjRjMCA0LjMtMSA4LTIuNSAxMC43Yy0xLjQtLjYtMi45LS45LTQuNC0uOXMtMyAuMy00LjQgLjljLTEuNS0yLjctMi41LTYuNC0yLjUtMTAuN2MwLTUuMyAyLjItMTAuMyA2LjktMTUuNHoiIGZpbGw9IiNmNWZiZmYiIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSIxLjYiIHN0cm9rZS1saW5lam9pbj0icm91bmQiLz48bGluZSB4MT0iMTYiIHkxPSI4IiB4Mj0iMTYiIHkyPSIyNS41IiBzdHJva2U9IiMwODE1MWQiIHN0cm9rZS13aWR0aD0iMS4zIiBzdHJva2UtbGluZWNhcD0icm91bmQiLz48L3N2Zz4=") 16 16,grab}
+body.familymode .map-wrap{cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxnIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSI0LjIiPjxwYXRoIGQ9Ik0zLjUgMjVxMC0zIDMuNS0zaDE1cTQuNSAwIDUuNS0zIi8+PHBhdGggZD0iTTcgMTloMTQuNSIvPjxwYXRoIGQ9Ik05IDIydi0zTTE1IDIydi0zTTIxIDIydi0zIi8+PHBhdGggZD0iTTIyIDE5di01cTAtMi4yIDIuMi0yLjJoMy4zIi8+PC9nPjxnIHN0cm9rZT0iI2Y1ZmJmZiIgc3Ryb2tlLXdpZHRoPSIyIj48cGF0aCBkPSJNMy41IDI1cTAtMyAzLjUtM2gxNXE0LjUgMCA1LjUtMyIvPjxwYXRoIGQ9Ik03IDE5aDE0LjUiLz48cGF0aCBkPSJNOSAyMnYtM00xNSAyMnYtM00yMSAyMnYtMyIvPjxwYXRoIGQ9Ik0yMiAxOXYtNXEwLTIuMiAyLjItMi4yaDMuMyIvPjwvZz48L3N2Zz4=") 16 16,default}
+body.familymode .map-wrap .leaflet-grab{cursor:url("data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHdpZHRoPSIzMiIgaGVpZ2h0PSIzMiIgdmlld0JveD0iMCAwIDMyIDMyIiBmaWxsPSJub25lIiBzdHJva2UtbGluZWNhcD0icm91bmQiIHN0cm9rZS1saW5lam9pbj0icm91bmQiPjxnIHN0cm9rZT0iIzA4MTUxZCIgc3Ryb2tlLXdpZHRoPSI0LjIiPjxwYXRoIGQ9Ik0zLjUgMjVxMC0zIDMuNS0zaDE1cTQuNSAwIDUuNS0zIi8+PHBhdGggZD0iTTcgMTloMTQuNSIvPjxwYXRoIGQ9Ik05IDIydi0zTTE1IDIydi0zTTIxIDIydi0zIi8+PHBhdGggZD0iTTIyIDE5di01cTAtMi4yIDIuMi0yLjJoMy4zIi8+PC9nPjxnIHN0cm9rZT0iI2Y1ZmJmZiIgc3Ryb2tlLXdpZHRoPSIyIj48cGF0aCBkPSJNMy41IDI1cTAtMyAzLjUtM2gxNXE0LjUgMCA1LjUtMyIvPjxwYXRoIGQ9Ik03IDE5aDE0LjUiLz48cGF0aCBkPSJNOSAyMnYtM00xNSAyMnYtM00yMSAyMnYtMyIvPjxwYXRoIGQ9Ik0yMiAxOXYtNXEwLTIuMiAyLjItMi4yaDMuMyIvPjwvZz48L3N2Zz4=") 16 16,grab}
+.leaflet-dragging .map-wrap .leaflet-grab{cursor:grabbing!important}
+@media (pointer:coarse){.map-wrap,body.familymode .map-wrap{cursor:default}.map-wrap .leaflet-grab,body.familymode .map-wrap .leaflet-grab{cursor:grab}}
 .map-wrap:fullscreen,.map-wrap:-webkit-full-screen{width:100%;height:100%;background:#0a1620}
 .map-wrap:fullscreen #map,.map-wrap:-webkit-full-screen #map{height:100%}
 #map{position:absolute;inset:0;background:#0a1620}
@@ -94,6 +101,12 @@ body.armed .resetbtn{display:flex}
 .stop-div:hover .stop-marker{transform:scale(1.12)}
 .stop-div.is-active .stop-marker{transform:scale(1.22);box-shadow:0 0 0 4px rgba(214,166,74,.45),0 3px 9px rgba(0,0,0,.5)}
 .stop-marker.pop{animation:markerpop .5s cubic-bezier(.2,.8,.3,1.5)}
+/* differentiated stop types — additive only: numbered chip, winter flake, hover/active scale and pop all preserved. Type class set by inferStopType(); falls back to default style if absent. */
+.stop-marker--winter{border-color:var(--frost);box-shadow:0 0 0 3px rgba(108,198,224,.4),0 0 9px 1px rgba(108,198,224,.55),0 2px 6px rgba(0,0,0,.45);transform:scale(1.08)}
+.stop-marker--endpoint{border-color:var(--brass);box-shadow:0 0 0 3px rgba(214,166,74,.42),0 2px 7px rgba(0,0,0,.5);transform:scale(1.12)}
+.stop-marker--endpoint::after{content:"\2605";position:absolute;top:-7px;right:-6px;font-size:11px;line-height:1;color:var(--brass);text-shadow:0 0 3px #06121a,0 0 2px #06121a;pointer-events:none}
+.stop-marker--anchorage::after{content:"\2693";position:absolute;left:-6px;bottom:-6px;font-size:11px;line-height:1;color:#d5ecf6;text-shadow:0 0 3px #06121a,0 0 2px #06121a;pointer-events:none}
+.stop-marker--settlement::after{content:"\2302";position:absolute;left:-5px;bottom:-7px;font-size:12px;line-height:1;color:#ecdcae;text-shadow:0 0 3px #06121a,0 0 2px #06121a;pointer-events:none}
 @keyframes markerpop{0%{transform:scale(0);opacity:0}55%{transform:scale(1.2);opacity:1}100%{transform:scale(1)}}
 .ship-div{background:none;border:none}
 .ship-inner{width:30px;height:30px;display:grid;place-items:center;transition:transform .12s linear;filter:drop-shadow(0 0 7px rgba(255,210,127,.75))}
@@ -119,6 +132,10 @@ body.armed .resetbtn{display:flex}
 .lc-desc{font-size:13px;line-height:1.55;color:var(--muted);border-top:1px solid var(--line);padding-top:10px}
 .lc-desc p{margin:0 0 7px}
 .lc-desc p:last-child{margin-bottom:0}
+.lc-media{display:none;margin-bottom:12px}
+.lc-media.has-media{display:flex;gap:8px;overflow-x:auto;padding-bottom:4px}
+.lc-media-item{flex:0 0 auto;width:120px;height:80px;border-radius:8px;object-fit:cover;border:1px solid var(--line);cursor:pointer}
+.lc-media-item:hover{border-color:var(--frost)}
 .lc-muted{font-style:italic;color:var(--faint)}
 .speedrow{display:flex;align-items:center;gap:10px;margin-top:14px}
 .speedlabel{font-family:var(--mono);font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);white-space:nowrap}
@@ -180,7 +197,6 @@ body.familymode .stop-div{opacity:.16;filter:grayscale(.6)}
 .fam-h-node{width:14px;height:14px;background:#fff;border:2.5px solid #ff5ea8;border-radius:3px;box-shadow:0 0 0 2px rgba(8,20,28,.55);cursor:grab}
 .fam-h-via{width:11px;height:11px;background:#ff5ea8;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 2px rgba(8,20,28,.55);cursor:grab}
 .title-fam{display:block;font-family:var(--serif);font-style:italic;font-weight:600;font-size:.46em;line-height:1.12;color:var(--brass);margin-top:10px;letter-spacing:.01em}
-.editbtn{display:none}
 .famstory-field{margin-top:16px}
 .famstory-chip{display:flex;align-items:center;gap:10px;width:100%;text-align:left;padding:11px 13px;border-radius:10px;border:1px solid rgba(43,179,163,.4);background:linear-gradient(180deg,rgba(43,179,163,.1),rgba(255,94,168,.06));color:#dff4f1;font-family:var(--sans);font-size:13px;cursor:pointer;transition:border-color .12s,background .12s}
 .famstory-chip:hover{border-color:rgba(43,179,163,.75);background:linear-gradient(180deg,rgba(43,179,163,.18),rgba(255,94,168,.1))}
@@ -346,6 +362,31 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
 .prefetch-pill{position:absolute;right:12px;bottom:34px;z-index:1100;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--frost);background:rgba(11,28,37,.8);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:20px;padding:6px 12px;opacity:.92;transition:opacity .5s ease;pointer-events:none}
 .prefetch-pill.done{opacity:0}
 .mapbtn.dual-on{background:rgba(70,211,154,.22);border-color:rgba(70,211,154,.6);color:#fff}
+/* ===== content editor ===== */
+body.contentediting .content-edit-btn{background:rgba(108,198,224,.16);color:#fff;border-color:rgba(108,198,224,.5)}
+.content-panel{z-index:1360;max-height:min(80vh,640px);overflow-y:auto}
+.content-panel .cp-close{position:absolute;top:9px;right:11px;background:none;border:none;color:var(--faint);font-size:19px;line-height:1;cursor:pointer}
+.content-panel .cp-close:hover{color:var(--text)}
+.cp-stop-name{font-family:var(--serif);font-size:17px;color:var(--muted);margin:4px 0 14px}
+.content-panel.has-stop .cp-stop-name{color:var(--text)}
+.cp-label{font-family:var(--mono);font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint);margin:0 0 6px}
+.cp-desc{display:block;width:100%;box-sizing:border-box;background:rgba(6,18,26,.6);color:var(--text);border:1px solid var(--line);border-radius:8px;padding:9px 10px;font-family:var(--sans);font-size:12.5px;line-height:1.5;resize:vertical;margin-bottom:14px}
+.cp-desc:focus{outline:none;border-color:rgba(108,198,224,.5)}
+.cp-drop{display:flex;align-items:center;justify-content:center;gap:8px;border:1.5px dashed var(--line);border-radius:10px;padding:15px;color:var(--muted);font-size:12px;text-align:center;cursor:pointer;transition:border-color .15s,background .15s,color .15s}
+.cp-drop:hover{border-color:rgba(108,198,224,.45);color:var(--text)}
+.cp-drop.drag{border-color:var(--frost);background:rgba(108,198,224,.08);color:#fff}
+.cp-thumbs{display:flex;flex-wrap:wrap;gap:9px;margin-top:11px}
+.cp-thumb{position:relative;width:64px;height:48px}
+.cp-thumb img{width:64px;height:48px;object-fit:cover;border-radius:6px;border:1px solid var(--line);display:block}
+.cp-thumb-del{position:absolute;top:-6px;right:-6px;width:18px;height:18px;padding:0;border:none;border-radius:50%;background:#1a2e38;color:#fff;font-size:12px;line-height:1;cursor:pointer;display:flex;align-items:center;justify-content:center;box-shadow:0 1px 4px rgba(0,0,0,.6)}
+.cp-thumb-del:hover{background:#b4453a}
+.cp-import-row{margin-top:11px;font-size:11px;color:var(--faint)}
+.cp-import{color:var(--frost);cursor:pointer;border-bottom:1px dotted rgba(108,198,224,.5)}
+.cp-import:hover{color:#fff}
+.pop-media.has-media{display:flex;gap:6px;overflow-x:auto;margin-top:10px;padding-bottom:4px}
+.cp-lightbox{position:fixed;inset:0;z-index:3000;display:none;align-items:center;justify-content:center;padding:24px;background:rgba(6,14,20,.86);cursor:zoom-out}
+.cp-lightbox.show{display:flex}
+.cp-lightbox-img{max-width:92vw;max-height:92vh;border-radius:10px;box-shadow:0 24px 60px -12px rgba(0,0,0,.8)}
 </style>
 </head>
 <body>
@@ -370,6 +411,7 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
         <span class="speedval" id="speedVal">1&times;</span>
       </div>
       <button class="editbtn" id="editBtn">Edit route</button>
+      <button class="editbtn content-edit-btn" id="contentEditBtn">Edit content</button>
       <div class="legend" id="legend"></div>
       <div class="yffield">
         <div class="yflabel">Show stops by year</div>
@@ -402,6 +444,7 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
       <div class="lc-eb"><span class="lc-dot" id="lc-dot"></span><span id="lc-eb-text"></span></div>
       <h3 class="lc-place" id="lc-place"></h3>
       <div class="lc-meta"><span id="lc-date"></span><span class="lc-coord" id="lc-coord"></span></div>
+      <div class="lc-media" id="lc-media"></div>
       <div class="lc-desc" id="lc-desc"></div>
     </div>
     <div class="editpanel" id="editpanel">
@@ -413,6 +456,24 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
         <button id="epDownload">Download</button>
         <button id="epDone">Done</button>
       </div>
+    </div>
+    <div class="editpanel content-panel" id="contentPanel">
+      <button class="cp-close" id="cp-close" aria-label="Close">&times;</button>
+      <div class="ep-title">Editing stop content</div>
+      <div class="ep-help">Click any stop on the map to select it, then edit its description and images below.</div>
+      <div class="cp-stop-name" id="cp-stop-name">No stop selected</div>
+      <div class="cp-label">Description</div>
+      <textarea class="cp-desc" id="cp-desc" rows="5" placeholder="Write a description for this stop&hellip;"></textarea>
+      <div class="cp-label">Images</div>
+      <div class="cp-drop" id="cp-drop"><span>Drop images here</span><span aria-hidden="true">&#128206;</span></div>
+      <input type="file" id="cp-file" accept="image/*" multiple hidden>
+      <div class="cp-thumbs" id="cp-thumbs"></div>
+      <div class="ep-btns">
+        <button id="cp-save">Save stop</button>
+        <button id="cp-export">Export JSON</button>
+      </div>
+      <div class="cp-import-row">or <span class="cp-import" id="cp-import" role="button" tabindex="0">Import JSON</span></div>
+      <input type="file" id="cp-import-file" accept=".json,application/json" hidden>
     </div>
     <div class="editpanel famedit-panel" id="fampanel">
       <div class="ep-title">Editing the family&rsquo;s points</div>
@@ -443,7 +504,7 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
       <div class="fl-row"><span class="fl-key fl-kship"></span>By ship &mdash; the St.&nbsp;Roch (1944)</div>
       <div class="fl-row"><span class="fl-key fl-k1945"></span>St.&nbsp;Roch, carried west (1945)</div>
       <div class="fl-row"><span class="fl-key fl-ksled"></span>By dog sled (1946)</div>
-      <div class="fl-row"><span class="fl-key fl-knas"></span>By a different ship &mdash; the Nascopie</div>
+      <div class="fl-row"><span class="fl-key fl-knas"></span>By the Ship Nascopie</div>
       <div class="fl-row"><span class="fl-key fl-kest"></span>Estimated location</div>
       <div class="fl-hint">Press &#9654; to follow their two&#8209;year journey home, 1944&#8211;1946. The faint grey line is the St.&nbsp;Roch sailing on without them.</div>
     </div>
@@ -515,6 +576,19 @@ root.setProperty('--frost', C.frost); root.setProperty('--brass', C.brass);
 const MONTHS = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
 function el(tag, cls, txt){ const e=document.createElement(tag); if(cls) e.className=cls; if(txt!=null) e.textContent=txt; return e; }
 function colorForStop(s){ return s.year==='winter' ? C.winter : C.years[s.year]; }
+// Infer a display type for a stop from existing data (winterLabel / desc / position).
+// Returns 'winter'|'endpoint'|'anchorage'|'settlement' or null (=> default style). Never throws.
+function inferStopType(s){
+  try{
+    if(s.winterLabel!=null) return 'winter';
+    var voy=V.voyages[s._vi], n=voy?voy.stops.length:0;            // endpoint = first/last stop of its voyage (Vancouver / Halifax termini)
+    if(s.n===1 || (n && s.n===n)) return 'endpoint';
+    var d=(s.desc||[]).join(' ').toLowerCase();
+    if(/anchor/.test(d)) return 'anchorage';                       // log mentions anchoring
+    if(/\b(post|town|village|detachment|dockyard|harbour)\b/.test(d)) return 'settlement';
+  }catch(_e){}
+  return null;
+}
 function fmtCoord(lat,lng){ const la=Math.abs(lat).toFixed(3)+'\u00b0'+(lat>=0?'N':'S'); const lo=Math.abs(lng).toFixed(3)+'\u00b0'+(lng>=0?'E':'W'); return la+'  '+lo; }
 function fmtDate(ms){ const d=new Date(ms); return d.getUTCDate()+' '+MONTHS[d.getUTCMonth()]+' '+d.getUTCFullYear(); }
 
@@ -542,6 +616,16 @@ const r2=el('div','legend-row'); r2.append(el('div','legend-label','Route'));
 const o1=el('span','lg'); o1.append(el('span','ln')); o1.append(el('span',null,'1940\u201342 out')); r2.append(o1);
 const o2=el('span','lg'); const ln2=el('span','ln'); ln2.classList.add('v2'); o2.append(ln2); o2.append(el('span',null,'1944 back')); r2.append(o2);
 legendEl.append(r2);
+// Stop types — mirrors the marker glyphs/colours added in the previous PR (see inferStopType / .stop-marker--*)
+(function(){
+  const r3=el('div','legend-row'); r3.append(el('div','legend-label','Stop types'));
+  const mk=function(glyph,label,color){ const g=el('span','lg'); const sy=el('span','sym',glyph); sy.style.color=color; g.append(sy); g.append(el('span',null,label)); return g; };
+  r3.append(mk('⚓','Anchorage','#d5ecf6'));        // matches .stop-marker--anchorage
+  r3.append(mk('⌂','Settlement','#ecdcae'));       // matches .stop-marker--settlement
+  r3.append(mk('❄','Winter quarters','var(--frost)'));
+  r3.append(mk('★','Voyage endpoint','var(--brass)'));
+  legendEl.append(r3);
+})();
 
 const ESRI='https://services.arcgisonline.com/ArcGIS/rest/services/';
 function esri(path,native){ return L.tileLayer(ESRI+path+'/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,maxNativeZoom:native,attribution:'Tiles &copy; Esri'}); }
@@ -584,7 +668,8 @@ V.voyages.forEach(function(voy,vi){
   voy.stops.forEach(function(s){
     s._vi=vi; const gi=STOPS.length; s._gi=gi; STOPS.push(s);
     const isW=s.year==='winter';
-    const html='<div class="stop-marker'+(isW?' winter':'')+'" style="background:'+colorForStop(s)+'">'+(isW?'<span class="flake">\u2744</span>':'')+'<span class="num">'+s.n+'</span></div>';
+    const stype=inferStopType(s); const tcls=stype?(' stop-marker--'+stype):'';
+    const html='<div class="stop-marker'+(isW?' winter':'')+tcls+'" style="background:'+colorForStop(s)+'">'+(isW?'<span class="flake">\u2744</span>':'')+'<span class="num">'+s.n+'</span></div>';
     const icon=L.divIcon({className:'stop-div',html:html,iconSize:[28,28],iconAnchor:[14,14],popupAnchor:[0,-15]});
     const m=L.marker([s.lat,s.lng],{icon:icon,title:s.n+'. '+s.place,riseOnHover:true}).addTo(map);
     m.bindPopup(function(){ return makePopup(s,voy); },{maxWidth:320,className:'voyage-popup'});
@@ -616,6 +701,7 @@ function makePopup(s,voy){
   if(s.desc&&s.desc.length){ s.desc.forEach(function(p){ d.append(el('p',null,p)); }); }
   else d.append(el('p',null,'Logged position on the voyage.'));
   w.append(d);
+  if(window.contentEditor){ const cid=window.contentEditor.stopIdVoyage(s); if(cid){ const media=el('div','pop-media'); window.contentEditor.renderInto(cid, d, media, s.desc); if(media.childNodes.length) w.append(media); } }
   return w;
 }
 
@@ -670,6 +756,7 @@ function showLogCard(s){
   const d=document.getElementById('lc-desc'); d.innerHTML='';
   if(s.desc&&s.desc.length){ s.desc.forEach(function(p){ d.append(el('p',null,p)); }); }
   else d.append(el('p','lc-muted','Logged position on the voyage.'));
+  if(window.contentEditor){ const cid=window.contentEditor.stopIdVoyage(s); if(cid) window.contentEditor.renderInto(cid, d, document.getElementById('lc-media'), s.desc); }
   d.scrollTop=0; flashCard();
 }
 function showTransitionCard(){
@@ -733,6 +820,7 @@ function selectStop(gi,opt){
   if(opt.openPopup){ markers[gi].openPopup(); }
   setReadout(s.dateLabel, s.winterLabel ? 'Frozen in \u00b7 '+s.winterLabel : 'Anchored \u00b7 '+s.place);
   scrollItemIntoView(gi);
+  if(window.contentEditor && window.contentEditor.isActive()){ const cid=window.contentEditor.stopIdVoyage(s); if(cid) window.contentEditor.select(cid, s.place, s.desc); }
   if(window.innerWidth<=820){ closeNav(); }
 }
 
@@ -1123,6 +1211,7 @@ function famShowLogCard(s){
   document.getElementById('lc-date').textContent=famDate(s.dateMs);
   document.getElementById('lc-coord').textContent=fmtCoord(s.lat,s.lng);
   const d=document.getElementById('lc-desc'); d.innerHTML=''; d.append(el('p',null,s.note||''));
+  if(window.contentEditor){ const fid=window.contentEditor.stopIdFamily(s); if(fid){ window.contentEditor.renderInto(fid, d, document.getElementById('lc-media'), s.note?[s.note]:[]); if(window.contentEditor.isActive()) window.contentEditor.select(fid, s.place, s.note?[s.note]:[]); } }
   d.scrollTop=0; flashCard();
 }
 
@@ -1408,6 +1497,169 @@ if(famBtn) famBtn.addEventListener('click', function(){ famOverlayOn=false; famO
     window.addEventListener('pagehide', function(){ syncSend({type:'bye'}); });
     setTimeout(function(){ map.invalidateSize(); }, 80);
   }
+})();
+
+// --- content editor ---
+// In-UI editor for per-stop descriptions + images, persisted to localStorage.
+// Stop ids: "v1-stop-2" (voyage) / "fam-stop-6" (family). Shape:
+//   contentData[id] = { desc:string, images:[{src:dataURI, caption:string}] }
+// Non-breaking: with no saved content (or storage blocked) the map behaves as before.
+(function(){
+  const STORE_KEY='stroch-content';
+  let contentData={};
+  try{ const raw=localStorage.getItem(STORE_KEY); if(raw) contentData=JSON.parse(raw)||{}; }catch(_e){ contentData={}; }
+  if(!contentData || typeof contentData!=='object') contentData={};
+
+  function entryFor(id){ let e=contentData[id]; if(!e){ e=contentData[id]={desc:'',images:[]}; } if(typeof e.desc!=='string') e.desc=''; if(!Array.isArray(e.images)) e.images=[]; return e; }
+  function existing(id){ return contentData[id]; }
+  function descToText(orig){ if(Array.isArray(orig)) return orig.join('\n\n'); if(typeof orig==='string') return orig; return ''; }
+  function textToParas(text){ return String(text||'').split(/\n+/).map(function(s){ return s.trim(); }).filter(Boolean); }
+  function save(){ try{ localStorage.setItem(STORE_KEY, JSON.stringify(contentData)); return true; }catch(_e){ return false; } }
+
+  const panel=document.getElementById('contentPanel');
+  const btn=document.getElementById('contentEditBtn');
+  const nameEl=document.getElementById('cp-stop-name');
+  const descEl=document.getElementById('cp-desc');
+  const dropEl=document.getElementById('cp-drop');
+  const fileEl=document.getElementById('cp-file');
+  const thumbsEl=document.getElementById('cp-thumbs');
+  const saveBtn=document.getElementById('cp-save');
+  const exportBtn=document.getElementById('cp-export');
+  const importLink=document.getElementById('cp-import');
+  const importFile=document.getElementById('cp-import-file');
+  const closeBtn=document.getElementById('cp-close');
+
+  let active=false, currentId=null, currentOrig='';
+
+  function open(){
+    if(typeof editing!=='undefined' && editing && typeof exitEdit==='function') exitEdit();  // route + content panels share a slot
+    active=true; document.body.classList.add('contentediting'); panel.classList.add('show'); btn.textContent='Exit content';
+  }
+  function close(){ active=false; document.body.classList.remove('contentediting'); panel.classList.remove('show'); btn.textContent='Edit content'; }
+  function toggle(){ if(active) close(); else open(); }
+
+  function selectStop(id, name, originalDesc){
+    currentId=id; currentOrig=descToText(originalDesc);
+    nameEl.textContent=name||'(unnamed stop)';
+    panel.classList.add('has-stop');
+    const e=existing(id);
+    descEl.value=(e && e.desc) ? e.desc : currentOrig;
+    renderThumbs();
+    panel.classList.add('show');
+  }
+
+  function renderThumbs(){
+    thumbsEl.innerHTML='';
+    const e=currentId?existing(currentId):null;
+    const imgs=(e&&e.images)||[];
+    imgs.forEach(function(im,idx){
+      const wrap=el('div','cp-thumb');
+      const img=document.createElement('img'); img.src=im.src; img.alt=im.caption||''; wrap.appendChild(img);
+      const del=el('button','cp-thumb-del','×'); del.type='button'; del.title='Remove image';
+      del.addEventListener('click', function(ev){ ev.stopPropagation(); imgs.splice(idx,1); renderThumbs(); });
+      wrap.appendChild(del);
+      thumbsEl.appendChild(wrap);
+    });
+  }
+
+  function addFiles(files){
+    if(!currentId || !files || !files.length) return;
+    const e=entryFor(currentId);
+    Array.prototype.forEach.call(files, function(f){
+      if(!f.type || f.type.indexOf('image/')!==0) return;
+      const rd=new FileReader();
+      rd.onload=function(){ e.images.push({src:rd.result, caption:f.name||''}); renderThumbs(); };
+      rd.readAsDataURL(f);
+    });
+  }
+
+  // Render a stop's overrides into a card: swap the description and fill a media strip.
+  function renderInto(id, descTarget, mediaTarget, originalDesc){
+    const e=existing(id);
+    if(descTarget && e && e.desc && e.desc.trim()){
+      descTarget.classList.remove('pop-muted','lc-muted');
+      descTarget.innerHTML='';
+      textToParas(e.desc).forEach(function(p){ descTarget.append(el('p',null,p)); });
+    }
+    if(mediaTarget){
+      mediaTarget.innerHTML='';
+      const imgs=(e&&e.images)||[];
+      if(imgs.length){
+        mediaTarget.classList.add('has-media');
+        imgs.forEach(function(im){
+          const img=document.createElement('img'); img.className='lc-media-item'; img.src=im.src; img.alt=im.caption||''; img.loading='lazy';
+          img.addEventListener('click', function(){ openLightbox(im.src); });
+          mediaTarget.appendChild(img);
+        });
+      } else {
+        mediaTarget.classList.remove('has-media');
+      }
+    }
+  }
+
+  let lb=null;
+  function openLightbox(src){
+    if(!lb){
+      lb=el('div','cp-lightbox');
+      const im=document.createElement('img'); im.className='cp-lightbox-img'; lb.appendChild(im);
+      lb.addEventListener('click', function(){ lb.classList.remove('show'); });
+      document.body.appendChild(lb);
+    }
+    lb.querySelector('.cp-lightbox-img').src=src;
+    lb.classList.add('show');
+  }
+
+  function exportJSON(){
+    try{
+      const blob=new Blob([JSON.stringify(contentData,null,2)],{type:'application/json'});
+      const a=document.createElement('a'); a.href=URL.createObjectURL(blob); a.download='stroch-content.json';
+      document.body.appendChild(a); a.click(); document.body.removeChild(a);
+      setTimeout(function(){ URL.revokeObjectURL(a.href); },1000);
+    }catch(_e){}
+  }
+  function importJSON(file){
+    if(!file) return;
+    const rd=new FileReader();
+    rd.onload=function(){
+      try{
+        const obj=JSON.parse(rd.result);
+        if(obj && typeof obj==='object'){
+          Object.keys(obj).forEach(function(k){ contentData[k]=obj[k]; });
+          save();
+          if(currentId){ const e=existing(currentId); descEl.value=(e&&e.desc)?e.desc:currentOrig; renderThumbs(); }
+        }
+      }catch(_e){ alert('Could not read that JSON file.'); }
+    };
+    rd.readAsText(file);
+  }
+
+  if(panel){
+    if(btn) btn.addEventListener('click', toggle);
+    if(closeBtn) closeBtn.addEventListener('click', close);
+    const routeBtn=document.getElementById('editBtn');
+    if(routeBtn) routeBtn.addEventListener('click', function(){ if(active) close(); });   // opening the route editor closes this panel
+    if(descEl) descEl.addEventListener('input', function(){ if(currentId) entryFor(currentId).desc=descEl.value; });
+    if(dropEl){
+      dropEl.addEventListener('click', function(){ if(fileEl) fileEl.click(); });
+      dropEl.addEventListener('dragover', function(ev){ ev.preventDefault(); dropEl.classList.add('drag'); });
+      dropEl.addEventListener('dragleave', function(){ dropEl.classList.remove('drag'); });
+      dropEl.addEventListener('drop', function(ev){ ev.preventDefault(); dropEl.classList.remove('drag'); if(ev.dataTransfer) addFiles(ev.dataTransfer.files); });
+    }
+    if(fileEl) fileEl.addEventListener('change', function(){ addFiles(fileEl.files); fileEl.value=''; });
+    if(saveBtn) saveBtn.addEventListener('click', function(){ const ok=save(); saveBtn.textContent=ok?'Saved ✓':'Save failed'; setTimeout(function(){ saveBtn.textContent='Save stop'; },1500); });
+    if(exportBtn) exportBtn.addEventListener('click', exportJSON);
+    if(importLink) importLink.addEventListener('click', function(ev){ ev.preventDefault(); if(importFile) importFile.click(); });
+    if(importFile) importFile.addEventListener('change', function(){ importJSON(importFile.files && importFile.files[0]); importFile.value=''; });
+  }
+
+  // Hooks consumed by selectStop / showLogCard / famShowLogCard / makePopup in the map code above.
+  window.contentEditor={
+    isActive:function(){ return active; },
+    select:selectStop,
+    renderInto:renderInto,
+    stopIdVoyage:function(s){ try{ return V.voyages[s._vi].id+'-stop-'+s.n; }catch(_e){ return null; } },
+    stopIdFamily:function(s){ return (s && s.n!=null) ? ('fam-stop-'+s.n) : null; }
+  };
 })();
 </script>
 </body>
