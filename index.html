@@ -361,6 +361,9 @@ body.role-detail .detail-badge{display:flex;left:auto;right:62px}
 .detail-follow:not(.on){color:var(--frost);border-color:rgba(214,166,74,.55);background:rgba(214,166,74,.14)}
 .prefetch-pill{position:absolute;right:12px;bottom:34px;z-index:1100;font-family:var(--mono);font-size:10px;letter-spacing:.05em;color:var(--frost);background:rgba(11,28,37,.8);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:20px;padding:6px 12px;opacity:.92;transition:opacity .5s ease;pointer-events:none}
 .prefetch-pill.done{opacity:0}
+.shot-toast{position:absolute;left:50%;top:18px;transform:translateX(-50%) translateY(-6px);z-index:1400;font-family:var(--mono);font-size:11px;letter-spacing:.04em;color:var(--frost);background:rgba(11,28,37,.92);backdrop-filter:blur(8px);border:1px solid var(--line);border-radius:20px;padding:8px 16px;opacity:0;pointer-events:none;transition:opacity .25s ease,transform .25s ease;box-shadow:0 10px 30px -12px rgba(0,0,0,.7)}
+.shot-toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.shot-toast.err{color:#ffb4c4;border-color:rgba(255,120,150,.45)}
 .mapbtn.dual-on{background:rgba(70,211,154,.22);border-color:rgba(70,211,154,.6);color:#fff}
 /* ===== content editor ===== */
 body.contentediting .content-edit-btn{background:rgba(108,198,224,.16);color:#fff;border-color:rgba(108,198,224,.5)}
@@ -628,16 +631,16 @@ legendEl.append(r2);
 })();
 
 const ESRI='https://services.arcgisonline.com/ArcGIS/rest/services/';
-function esri(path,native){ return L.tileLayer(ESRI+path+'/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,maxNativeZoom:native,attribution:'Tiles &copy; Esri'}); }
+function esri(path,native){ return L.tileLayer(ESRI+path+'/MapServer/tile/{z}/{y}/{x}',{crossOrigin:true,maxZoom:16,maxNativeZoom:native,attribution:'Tiles &copy; Esri'}); }
 const oceanBase=esri('Ocean/World_Ocean_Base',13);
 const oceanRef =esri('Ocean/World_Ocean_Reference',13);
 const ocean=L.layerGroup([oceanBase,oceanRef]);
 const sat=esri('World_Imagery',19);
 const topo=esri('World_Topo_Map',19);
 const labels=esri('Reference/World_Boundaries_and_Places',16);
-const hillshade=L.tileLayer(ESRI+'Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{maxZoom:16,maxNativeZoom:16,opacity:.45,attribution:'Hillshade &copy; Esri'});
-const light=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:16,attribution:'&copy; OpenStreetMap &copy; CARTO'});
-const dark =L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{subdomains:'abcd',maxZoom:16,attribution:'&copy; OpenStreetMap &copy; CARTO'});
+const hillshade=L.tileLayer(ESRI+'Elevation/World_Hillshade/MapServer/tile/{z}/{y}/{x}',{crossOrigin:true,maxZoom:16,maxNativeZoom:16,opacity:.45,attribution:'Hillshade &copy; Esri'});
+const light=L.tileLayer('https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',{crossOrigin:true,subdomains:'abcd',maxZoom:16,attribution:'&copy; OpenStreetMap &copy; CARTO'});
+const dark =L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',{crossOrigin:true,subdomains:'abcd',maxZoom:16,attribution:'&copy; OpenStreetMap &copy; CARTO'});
 const map=L.map('map',{layers:[ocean],minZoom:2,maxZoom:16,zoomControl:false,worldCopyJump:false,attributionControl:true});
 L.control.zoom({position:'bottomleft'}).addTo(map);
 L.control.scale({metric:true,imperial:true,position:'bottomleft'}).addTo(map);
@@ -646,9 +649,10 @@ L.control.layers({'Ocean chart':ocean,'Satellite':sat,'Terrain':topo,'Light':lig
   const FS_SVG='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M8 21H5a2 2 0 0 1-2-2v-3"/></svg>';
   const I_SVG='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M12 11v5" stroke-linecap="round"/><circle cx="12" cy="7.6" r="1" fill="currentColor" stroke="none"/></svg>';
   const DUAL_SVG='<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><rect x="2.5" y="6" width="11" height="8" rx="1.2"/><rect x="14.5" y="9" width="7" height="7" rx="1.2"/><path d="M6 17.5h4M8 14v3.5"/></svg>';
+  const SHOT_SVG='<svg width="17" height="17" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linejoin="round" stroke-linecap="round"><path d="M4 7.5h3l1.4-2.2h7.2L17 7.5h3a1 1 0 0 1 1 1V18a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V8.5a1 1 0 0 1 1-1z"/><circle cx="12" cy="13" r="3.4"/></svg>';
   const Ctl=L.Control.extend({ options:{position:'topright'}, onAdd:function(){
     const d=L.DomUtil.create('div','mapctl-ctl');
-    d.innerHTML='<button class="mapbtn" id="fsBtn" title="Full screen" aria-label="Toggle full screen">'+FS_SVG+'</button><button class="mapbtn" id="welcomeBtn" title="How to use this map" aria-label="How to use this map">'+I_SVG+'</button><button class="mapbtn" id="dualBtn" title="Open detail screen on a second display" aria-label="Open detail screen on a second display">'+DUAL_SVG+'</button>';
+    d.innerHTML='<button class="mapbtn" id="fsBtn" title="Full screen" aria-label="Toggle full screen">'+FS_SVG+'</button><button class="mapbtn" id="shotBtn" title="Save a clean map image (P)" aria-label="Save a clean high-resolution image of the map">'+SHOT_SVG+'</button><button class="mapbtn" id="welcomeBtn" title="How to use this map" aria-label="How to use this map">'+I_SVG+'</button><button class="mapbtn" id="dualBtn" title="Open detail screen on a second display" aria-label="Open detail screen on a second display">'+DUAL_SVG+'</button>';
     L.DomEvent.disableClickPropagation(d); L.DomEvent.disableScrollPropagation(d);
     return d;
   }});
@@ -1660,6 +1664,143 @@ if(famBtn) famBtn.addEventListener('click', function(){ famOverlayOn=false; famO
     stopIdVoyage:function(s){ try{ return V.voyages[s._vi].id+'-stop-'+s.n; }catch(_e){ return null; } },
     stopIdFamily:function(s){ return (s && s.n!=null) ? ('fam-stop-'+s.n) : null; }
   };
+})();
+
+/* ============================================================
+   Clean high-resolution map screenshot
+   ------------------------------------------------------------
+   Rasterizes ONLY the #map element (chart tiles + route lines +
+   markers + ship that are currently toggled on). Everything else
+   is excluded automatically: the zoom / layers / scale controls,
+   attribution, the camera & full-screen buttons (Leaflet controls),
+   plus the readout, log card, transport bar, legend and badges
+   (siblings of #map). Open Leaflet popups/tooltips are skipped too.
+   Works the same in or out of full-screen — full-screen just makes
+   the map larger, so the image comes out bigger.
+
+   Use it with:  the camera button (top-right) · the "P" key ·
+                 or window.captureMap() from the console.
+   Options:  captureMap({ scale: 4 })      // sharper / bigger (1-5, default 3)
+             captureMap({ download: false })// returns {blob,canvas} instead of saving
+             captureMap({ name: 'my-map' }) // custom filename stem
+   ============================================================ */
+(function(){
+  const H2C_SRCS=[
+    'https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js',
+    'https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js',
+    'https://unpkg.com/html2canvas@1.4.1/dist/html2canvas.min.js'
+  ];
+  let h2cPromise=null;
+  function loadH2C(){
+    if(window.html2canvas) return Promise.resolve(window.html2canvas);
+    if(h2cPromise) return h2cPromise;
+    h2cPromise=new Promise(function(resolve,reject){
+      let i=0;
+      (function tryNext(){
+        if(window.html2canvas) return resolve(window.html2canvas);
+        if(i>=H2C_SRCS.length) return reject(new Error('Could not load html2canvas (offline?)'));
+        const s=document.createElement('script');
+        s.src=H2C_SRCS[i++]; s.async=true;
+        s.onload=function(){ window.html2canvas ? resolve(window.html2canvas) : tryNext(); };
+        s.onerror=tryNext;
+        document.head.appendChild(s);
+      })();
+    });
+    return h2cPromise;
+  }
+
+  // small transient pill on top of the map (sibling of #map -> never in the shot)
+  let toastEl=null, toastTimer=null;
+  function toast(msg, kind){
+    const host=document.querySelector('.map-wrap')||document.body;
+    if(!toastEl){ toastEl=document.createElement('div'); toastEl.className='shot-toast'; toastEl.setAttribute('data-no-capture',''); host.appendChild(toastEl); }
+    toastEl.textContent=msg;
+    toastEl.classList.toggle('err', kind==='err');
+    toastEl.classList.add('show');
+    clearTimeout(toastTimer);
+    if(kind!=='hold') toastTimer=setTimeout(function(){ if(toastEl) toastEl.classList.remove('show'); }, kind==='err'?4200:1700);
+  }
+
+  // resolve once no map tiles are still mid-load (so we don't capture blank tiles), or after a timeout
+  function whenTilesSettled(timeout){
+    return new Promise(function(resolve){
+      const mapEl=document.getElementById('map'); const t0=Date.now();
+      (function check(){
+        const pending=mapEl?mapEl.querySelectorAll('img.leaflet-tile:not(.leaflet-tile-loaded)').length:0;
+        if(pending===0 || Date.now()-t0>timeout) return resolve();
+        setTimeout(check, 120);
+      })();
+    });
+  }
+
+  function stamp(){ const d=new Date(), p=function(n){ return String(n).padStart(2,'0'); };
+    return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())+'-'+p(d.getHours())+p(d.getMinutes()); }
+
+  let busy=false;
+  async function captureMap(opts){
+    opts=opts||{};
+    if(busy) return null;
+    busy=true;
+    const scale=Math.max(1, Math.min(opts.scale||3, 5));
+    const mapEl=document.getElementById('map');
+    try{
+      if(!mapEl) throw new Error('Map element not found');
+      toast('Preparing image…','hold');
+      if(typeof map!=='undefined' && map && map.invalidateSize) map.invalidateSize();
+      await new Promise(function(r){ requestAnimationFrame(function(){ requestAnimationFrame(r); }); });
+      await whenTilesSettled(2500);
+      const h2c=await loadH2C();
+      toast('Rendering…','hold');
+      const render=h2c(mapEl,{
+        useCORS:true,
+        backgroundColor:'#0a1620',
+        scale:scale,
+        logging:false,
+        ignoreElements:function(node){
+          if(!node || !node.classList) return false;
+          return (node.hasAttribute && node.hasAttribute('data-no-capture'))
+            || node.classList.contains('leaflet-control-container')
+            || node.classList.contains('leaflet-popup-pane')
+            || node.classList.contains('leaflet-tooltip-pane');
+        }
+      });
+      const canvas=await Promise.race([ render, new Promise(function(_,rej){ setTimeout(function(){ rej(new Error('Render timed out')); }, 30000); }) ]);
+      const blob=await new Promise(function(res){ canvas.toBlob ? canvas.toBlob(res,'image/png') : res(null); });
+      if(!blob) throw new Error('Image encoding failed');
+      if(opts.download!==false){
+        const url=URL.createObjectURL(blob);
+        const a=document.createElement('a');
+        a.href=url; a.download=(opts.name||'st-roch-northwest-passage')+'-'+stamp()+'.png';
+        document.body.appendChild(a); a.click(); a.remove();
+        setTimeout(function(){ URL.revokeObjectURL(url); }, 4000);
+      }
+      toast('Image saved ✓');
+      return {blob:blob, canvas:canvas, width:canvas.width, height:canvas.height};
+    }catch(err){
+      console.error('[captureMap]', err);
+      const msg=String((err&&err.message)||err);
+      const tainted=/taint|insecure|secur/i.test(msg);
+      toast(tainted ? 'Export blocked by a cross-origin tile' : 'Could not create image', 'err');
+      return null;
+    }finally{
+      busy=false;
+    }
+  }
+  window.captureMap=captureMap;
+
+  // wire the camera button in the top-right control cluster
+  function wireBtn(){ const b=document.getElementById('shotBtn'); if(b && !b._wired){ b._wired=true; b.addEventListener('click', function(){ captureMap(); }); } }
+  wireBtn();
+  if(!document.getElementById('shotBtn')) document.addEventListener('DOMContentLoaded', wireBtn);
+
+  // keyboard shortcut: "P" (ignored while typing in a field or with modifier keys)
+  document.addEventListener('keydown', function(e){
+    if(e.key!=='p' && e.key!=='P') return;
+    if(e.metaKey||e.ctrlKey||e.altKey) return;
+    const a=document.activeElement, tn=a&&a.tagName;
+    if(tn==='INPUT'||tn==='TEXTAREA'||tn==='SELECT'||(a&&a.isContentEditable)) return;
+    e.preventDefault(); captureMap();
+  });
 })();
 </script>
 </body>
